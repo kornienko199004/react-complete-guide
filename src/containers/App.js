@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import classes from './App.css';
-import Person from './Person/Person';
-import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
+import Person from '../components/Person/Person';
 
 class App extends Component {
     state = {
@@ -13,16 +12,16 @@ class App extends Component {
         showPersons: false,
     };
 
-    deletePersonHandler = (personIndex) => {
+    deletePersonHandler = personIndex => {
         const persons = [...this.state.persons];
         persons.splice(personIndex, 1);
-        this.setState({ persons: persons }); 
+        this.setState({ persons: persons });
     };
 
     nameChangedHandler = (event, id) => {
         const personIndex = this.state.persons.findIndex(p => p.id === id);
         const person = {
-            ...this.state.persons[personIndex]
+            ...this.state.persons[personIndex],
         };
 
         person.name = event.target.value;
@@ -46,14 +45,17 @@ class App extends Component {
             persons = (
                 <div>
                     {this.state.persons.map((person, index) => {
-                        return <ErrorBoundary key={person.id}>
-                                    <Person
-                                        click={() => this.deletePersonHandler(index)}
-                                        name={person.name}
-                                        age={person.age}
-                                        changed={(event, id) => this.nameChangedHandler(event, person.id)}
-                                        />
-                                </ErrorBoundary>;
+                        return (
+                            <Person
+                                click={() => this.deletePersonHandler(index)}
+                                name={person.name}
+                                age={person.age}
+                                key={person.id}
+                                changed={(event, id) =>
+                                    this.nameChangedHandler(event, person.id)
+                                }
+                            />
+                        );
                     })}
                 </div>
             );
@@ -71,8 +73,13 @@ class App extends Component {
         return (
             <div className={classes.App}>
                 <h1>Hi, I'm React App</h1>
-                <p className={assignedClasses.join(' ')}>This is really working!</p>
-                <button className={btnClass.join(' ')} onClick={this.togglePersonsHandler}>
+                <p className={assignedClasses.join(' ')}>
+                    This is really working!
+                </p>
+                <button
+                    className={btnClass.join(' ')}
+                    onClick={this.togglePersonsHandler}
+                >
                     Toggle persons
                 </button>
                 {persons}
