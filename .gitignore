@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/chanpter2-hw
 
 # testing
 /coverage
