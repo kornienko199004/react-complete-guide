@@ -1,9 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import classes from './Cockpit.css';
 import AuthContext from '../../context/auth-context';
 
 const cockpit = props => {
     const toggleBtnRef = useRef(null);
+    const authContext = useContext(AuthContext);
+
+    console.log(authContext.authenticated);
 
     useEffect(() => {
         console.log('[Cockpit.js] useErrect');
